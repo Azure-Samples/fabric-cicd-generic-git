@@ -1,0 +1,15 @@
+# Local environment configuration with real secrets. Never commit these.
+config/*.env
+!config/*.env.example
+
+# Common local artifacts.
+*.log
+.DS_Store
+.vscode/
+.idea/
+
+# Personal notes.
+TODO.md
+docs/design.md
+# Other folders
+fabric2/

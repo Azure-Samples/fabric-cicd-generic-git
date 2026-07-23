@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "SampleDataPipeline",
+    "description": "Sample data pipeline deployed by the fabric-cicd-generic-git sample."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b2222222-2222-4222-8222-222222222222"
+  }
+}
