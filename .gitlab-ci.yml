@@ -39,6 +39,7 @@ validate:
 lint:markdown:
   stage: validate
   image: node:24-alpine
+  before_script: []
   script:
     - npx --yes markdownlint-cli2@0.23.3 '**/*.md'
   rules:
@@ -51,6 +52,7 @@ check:links:
   image:
     name: lycheeverse/lychee:0.15.1
     entrypoint: [""]
+  before_script: []
   script:
     - lychee --no-progress '**/*.md'
   rules:
