@@ -274,4 +274,4 @@ Creates the target workspace and assigns it to the configured capacity. If the w
 * [Introducing Bulk Export and Import APIs for CI/CD in Microsoft Fabric](https://community.fabric.microsoft.com/t5/Fabric-Updates-Blog/Introducing-Bulk-Export-and-Import-APIs-for-CI-CD-in-Microsoft/ba-p/5172183)
 * [Bulk Export Item Definitions API reference](https://learn.microsoft.com/rest/api/fabric/core/items/bulk-export-item-definitions)
 * [Bulk Import Item Definitions API reference](https://learn.microsoft.com/rest/api/fabric/core/items/bulk-import-item-definitions)
-* [Tutorial: CI/CD using the Bulk Import and Export API](https://aka.ms/AAzye19)
+* [Tutorial: CI/CD using the Bulk Import and Export API](https://learn.microsoft.com/en-us/fabric/cicd/tutorial-bulkapi-cicd)
