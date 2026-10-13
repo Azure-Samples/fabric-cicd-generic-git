@@ -1,9 +1,6 @@
 # Fabric CI/CD for Generic Git Providers
 
-This sample implements a CI/CD workflow for Microsoft Fabric using the new [Bulk Export and Import Item Definition APIs](https://aka.ms/AAzye0t) (Preview) to promote Fabric item definitions from a Git repository into Fabric workspaces across multiple environments, with first-class support for service principal authentication and multi-tenant deployments.
-
-> [!NOTE]
-> The Bulk Export and Import APIs are in Preview and require the `?beta=true` query parameter. They may change before general availability.
+This sample implements a CI/CD workflow for Microsoft Fabric using the [Bulk Export and Import Item Definition APIs](https://aka.ms/AAzye0t) to promote Fabric item definitions from a Git repository into Fabric workspaces across multiple environments, with first-class support for service principal authentication and multi-tenant deployments.
 
 ## When to use this sample
 
@@ -207,7 +204,7 @@ Exports all (or selected) item definitions from a Fabric workspace into a local 
 
 1. Authenticates with the service principal configured in `config/<name>.env`.
 2. Resolves the workspace display name to a workspace ID via the List Workspaces API.
-3. Calls the Bulk Export API (`POST /v1/workspaces/{id}/items/bulkExportDefinitions?beta=true`) with mode `All` or `Selective`.
+3. Calls the Bulk Export API (`POST /v1/workspaces/{id}/items/bulkExportDefinitions`) with mode `All` or `Selective`.
 4. Polls the long-running operation until completion.
 5. Iterates over each entry in the `definitionParts[]` array of the result. Each entry contains a `path` (for example `/SampleNotebook.Notebook/.platform`) and a base64-encoded `payload`. The script decodes the payload and writes it to the corresponding file path under the output folder.
 6. If `--prune` is set, deletes any local files in the output folder that were not present in the export result, then removes empty directories. This keeps the local tree in sync when items are renamed or deleted from the workspace.
@@ -232,7 +229,7 @@ Imports item definitions from a local folder into a Fabric workspace. The script
 2. Resolves the workspace display name to a workspace ID.
 3. Walks the source folder recursively. For each file, it constructs a definition part with the relative path prefixed by `/` (matching the API format) and base64-encodes the file content as the payload.
 4. Assembles all parts into a single JSON request body with a `definitionParts[]` array.
-5. Calls the Bulk Import API (`POST /v1/workspaces/{id}/items/bulkImportDefinitions?beta=true`).
+5. Calls the Bulk Import API (`POST /v1/workspaces/{id}/items/bulkImportDefinitions`).
 6. Polls the long-running operation until completion.
 7. Reads `importItemDefinitionsDetails[]` from the result and prints a per-item summary showing the display name, item type, operation (Create or Update), and status (Succeeded or Failed). Exits non-zero if any item failed.
 
@@ -268,7 +265,6 @@ Creates the target workspace and assigns it to the configured capacity. If the w
 
 ## Known limitations
 
-* The Bulk Export and Import APIs are in Preview and require `beta=true`.
 * Service principal support depends on item type. The export and import operations succeed only when every item involved supports service principal operations.
 * Items that hard-reference another item by workspace or item GUID (for example a pipeline that invokes a specific notebook by ID) need rebinding per environment. The sample keeps items independent to avoid this; parameterize such references when you add them.
 * Sensitivity labels are enforced by Fabric. Items with protected labels may not export or import.
@@ -276,6 +272,6 @@ Creates the target workspace and assigns it to the configured capacity. If the w
 ## Related resources
 
 * [Introducing Bulk Export and Import APIs for CI/CD in Microsoft Fabric](https://community.fabric.microsoft.com/t5/Fabric-Updates-Blog/Introducing-Bulk-Export-and-Import-APIs-for-CI-CD-in-Microsoft/ba-p/5172183)
-* [Bulk Export Item Definitions API reference](https://learn.microsoft.com/rest/api/fabric/core/items/bulk-export-item-definitions(beta))
-* [Bulk Import Item Definitions API reference](https://learn.microsoft.com/rest/api/fabric/core/items/bulk-import-item-definitions(beta))
+* [Bulk Export Item Definitions API reference](https://learn.microsoft.com/rest/api/fabric/core/items/bulk-export-item-definitions)
+* [Bulk Import Item Definitions API reference](https://learn.microsoft.com/rest/api/fabric/core/items/bulk-import-item-definitions)
 * [Tutorial: CI/CD using the Bulk Import and Export API](https://aka.ms/AAzye19)

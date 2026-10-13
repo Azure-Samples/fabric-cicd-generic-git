@@ -221,7 +221,7 @@ __fabric_bulk_call() {
 # Echoes the export result JSON (itemDefinitionsIndex + definitionParts).
 fabric::bulk_export() {
   local ws_id="$1" mode="$2" items_json="${3:-}"
-  local url="${FABRIC_API_BASE_URL}/workspaces/${ws_id}/items/bulkExportDefinitions?beta=true"
+  local url="${FABRIC_API_BASE_URL}/workspaces/${ws_id}/items/bulkExportDefinitions"
   local request_body
   if [[ "$mode" == "Selective" ]]; then
     [[ -z "$items_json" ]] && die "Selective export requires a list of item IDs"
@@ -237,6 +237,6 @@ fabric::bulk_export() {
 # Echoes the import result JSON (importItemDefinitionsDetails).
 fabric::bulk_import() {
   local ws_id="$1" request_body="$2"
-  local url="${FABRIC_API_BASE_URL}/workspaces/${ws_id}/items/bulkImportDefinitions?beta=true"
+  local url="${FABRIC_API_BASE_URL}/workspaces/${ws_id}/items/bulkImportDefinitions"
   __fabric_bulk_call "$url" "$request_body" "importItemDefinitionsDetails"
 }
