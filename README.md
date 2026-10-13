@@ -1,6 +1,6 @@
 # Fabric CI/CD for Generic Git Providers
 
-This sample implements a CI/CD workflow for Microsoft Fabric using the [Bulk Export and Import Item Definition APIs](https://aka.ms/AAzye0t) to promote Fabric item definitions from a Git repository into Fabric workspaces across multiple environments, with first-class support for service principal authentication and multi-tenant deployments.
+This sample implements a CI/CD workflow for Microsoft Fabric using the [Bulk Export and Import Item Definition APIs](https://learn.microsoft.com/en-us/fabric/cicd/tutorial-bulkapi-cicd) to promote Fabric item definitions from a Git repository into Fabric workspaces across multiple environments, with first-class support for service principal authentication and multi-tenant deployments.
 
 ## When to use this sample
 
