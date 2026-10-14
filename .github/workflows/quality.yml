@@ -12,13 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
-      - name: Install ShellCheck
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes shellcheck
-
       - name: Lint shell scripts
-        run: shellcheck scripts/*.sh scripts/lib/*.sh
+        run: |
+          docker run --rm -v "$PWD:/src" -w /src \
+            koalaman/shellcheck-alpine:v0.11.0 \
+            shellcheck scripts/*.sh scripts/lib/*.sh
 
       - name: Lint Markdown
         run: npx --yes markdownlint-cli2@0.23.3 '**/*.md'
@@ -33,4 +31,4 @@ jobs:
         run: |
           docker run --rm -v "$PWD:/input" -w /input \
             lycheeverse/lychee:0.24.2 \
-            --no-progress --accept 200,429 '**/*.md'
+            --no-progress --accept '200..=299,429' '**/*.md'
