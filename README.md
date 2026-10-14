@@ -184,7 +184,7 @@ Create environment-scoped CI/CD variables (Settings > CI/CD > Variables) for eac
 | `FABRIC_CLIENT_SECRET` | Service principal client secret. Mark masked and protected. |
 | `FABRIC_WORKSPACE_NAME` | Target workspace display name. |
 
-The pipeline reads these variables directly, so no `config/*.env` file is needed in CI. Its `validate` stage runs ShellCheck and a dry run; `deploy:dev` runs on `main`; `deploy:test` and `deploy:prod` run behind manual gates. GitHub Actions separately runs ShellCheck, Markdown linting, YAML linting, and link checks on pull requests.
+The pipeline reads these variables directly, so no `config/*.env` file is needed in CI. Its `validate` stage runs ShellCheck and a dry run; `deploy:dev` runs on `main`; `deploy:test` and `deploy:prod` run behind manual gates.
 
 #### Troubleshooting CI/CD
 
