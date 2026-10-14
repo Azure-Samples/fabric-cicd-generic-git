@@ -1,0 +1,36 @@
+name: Quality checks
+
+'on':
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - name: Install ShellCheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes shellcheck
+
+      - name: Lint shell scripts
+        run: shellcheck scripts/*.sh scripts/lib/*.sh
+
+      - name: Lint Markdown
+        run: npx --yes markdownlint-cli2@0.23.3 '**/*.md'
+
+      - name: Lint YAML
+        run: |
+          python3 -m venv "$RUNNER_TEMP/yamllint"
+          "$RUNNER_TEMP/yamllint/bin/pip" install --disable-pip-version-check yamllint==1.37.1
+          "$RUNNER_TEMP/yamllint/bin/yamllint" .gitlab-ci.yml .github/workflows/quality.yml
+
+      - name: Check Markdown links
+        run: |
+          docker run --rm -v "$PWD:/input" -w /input \
+            lycheeverse/lychee:0.24.2 \
+            --no-progress --accept 200,429 '**/*.md'

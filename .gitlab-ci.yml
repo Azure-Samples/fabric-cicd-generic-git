@@ -35,30 +35,6 @@ validate:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_COMMIT_BRANCH == "main"'
 
-# Lint Markdown files on every merge request and on main.
-lint:markdown:
-  stage: validate
-  image: node:24-alpine
-  before_script: []
-  script:
-    - npx --yes markdownlint-cli2@0.23.3 '**/*.md'
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_COMMIT_BRANCH == "main"'
-
-# Check links in Markdown files on every merge request and on main.
-check:links:
-  stage: validate
-  image:
-    name: lycheeverse/lychee:0.15.1
-    entrypoint: [""]
-  before_script: []
-  script:
-    - lychee --no-progress '**/*.md'
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_COMMIT_BRANCH == "main"'
-
 # Deploy to the development workspace automatically on main.
 deploy:dev:
   stage: deploy_dev

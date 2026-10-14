@@ -1,6 +1,6 @@
 # Fabric CI/CD for Generic Git Providers
 
-This sample implements a CI/CD workflow for Microsoft Fabric using the [Bulk Export and Import Item Definition APIs](https://aka.ms/AAzye0t) to promote Fabric item definitions from a Git repository into Fabric workspaces across multiple environments, with first-class support for service principal authentication and multi-tenant deployments.
+This sample implements a CI/CD workflow for Microsoft Fabric using the [Bulk Export and Import Item Definition APIs](https://learn.microsoft.com/en-us/fabric/cicd/tutorial-bulkapi-cicd) to promote Fabric item definitions from a Git repository into Fabric workspaces across multiple environments, with first-class support for service principal authentication and multi-tenant deployments.
 
 ## When to use this sample
 
@@ -66,6 +66,7 @@ A developer iterates in a Fabric feature workspace, exports the workspace into t
 | `config/*.env.example` | Per-environment configuration templates. |
 | `fabric/` | Sample items in native Fabric source format. |
 | `.gitlab-ci.yml` | Example CI/CD pipeline definition (GitLab). |
+| `.github/workflows/quality.yml` | GitHub Actions checks for pull requests. |
 
 ## Prerequisites
 
@@ -183,7 +184,7 @@ Create environment-scoped CI/CD variables (Settings > CI/CD > Variables) for eac
 | `FABRIC_CLIENT_SECRET` | Service principal client secret. Mark masked and protected. |
 | `FABRIC_WORKSPACE_NAME` | Target workspace display name. |
 
-The pipeline reads these variables directly, so no `config/*.env` file is needed in CI. The `validate` stage runs ShellCheck, a dry run, Markdown linting, and a link check; `deploy:dev` runs on `main`; `deploy:test` and `deploy:prod` run behind manual gates.
+The pipeline reads these variables directly, so no `config/*.env` file is needed in CI. Its `validate` stage runs ShellCheck and a dry run; `deploy:dev` runs on `main`; `deploy:test` and `deploy:prod` run behind manual gates. GitHub Actions separately runs ShellCheck, Markdown linting, YAML linting, and link checks on pull requests.
 
 #### Troubleshooting CI/CD
 
@@ -271,4 +272,4 @@ Creates the target workspace and assigns it to the configured capacity. If the w
 * [Introducing Bulk Export and Import APIs for CI/CD in Microsoft Fabric](https://community.fabric.microsoft.com/t5/Fabric-Updates-Blog/Introducing-Bulk-Export-and-Import-APIs-for-CI-CD-in-Microsoft/ba-p/5172183)
 * [Bulk Export Item Definitions API reference](https://learn.microsoft.com/rest/api/fabric/core/items/bulk-export-item-definitions)
 * [Bulk Import Item Definitions API reference](https://learn.microsoft.com/rest/api/fabric/core/items/bulk-import-item-definitions)
-* [Tutorial: CI/CD using the Bulk Import and Export API](https://aka.ms/AAzye19)
+* [Tutorial: CI/CD using the Bulk Import and Export API](https://learn.microsoft.com/en-us/fabric/cicd/tutorial-bulkapi-cicd)
