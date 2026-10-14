@@ -21,7 +21,7 @@ default:
 # Validate scripts and payload on every merge request and on main.
 validate:
   stage: validate
-  image: koalaman/shellcheck-alpine:stable
+  image: koalaman/shellcheck-alpine:v0.11.0
   environment:
     name: dev
     action: prepare

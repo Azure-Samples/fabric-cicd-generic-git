@@ -1,6 +1,6 @@
 # Fabric CI/CD for Generic Git Providers
 
-This sample implements a CI/CD workflow for Microsoft Fabric using the [Bulk Export and Import Item Definition APIs](https://learn.microsoft.com/en-us/fabric/cicd/tutorial-bulkapi-cicd) to promote Fabric item definitions from a Git repository into Fabric workspaces across multiple environments, with first-class support for service principal authentication and multi-tenant deployments.
+This sample implements a CI/CD workflow for Microsoft Fabric using the [Bulk Export and Import Item Definition APIs](https://learn.microsoft.com/rest/api/fabric/core/items/bulk-import-item-definitions) to promote Fabric item definitions from a Git repository into Fabric workspaces across multiple environments, with first-class support for service principal authentication and multi-tenant deployments.
 
 ## When to use this sample
 
@@ -8,7 +8,6 @@ Choose this sample when one or more of the following apply:
 
 * Your organization promotes Fabric content through GitLab, Bitbucket, or another Git tool that Fabric Git integration does not natively support.
 * Your environments (development, test, production) live in different Microsoft Entra tenants.
-
 
 If your environments share a single tenant and you use a Fabric-supported Git provider, evaluate native [Fabric Git integration](https://learn.microsoft.com/fabric/cicd/git-integration/intro-to-git-integration) and [deployment pipelines](https://learn.microsoft.com/fabric/cicd/deployment-pipelines/intro-to-deployment-pipelines) first.
 
@@ -67,6 +66,7 @@ A developer iterates in a Fabric feature workspace, exports the workspace into t
 | `config/*.env.example` | Per-environment configuration templates. |
 | `fabric/` | Sample items in native Fabric source format. |
 | `.gitlab-ci.yml` | Example CI/CD pipeline definition (GitLab). |
+| `.github/workflows/quality.yml` | GitHub Actions checks for pull requests. |
 
 ## Prerequisites
 
@@ -159,12 +159,10 @@ scripts/create_workspace.sh --env dev --admin "00000000-0000-0000-0000-000000000
 
 You can find a user's object ID in the Azure portal under **Microsoft Entra ID > Users > (select user) > Object ID**.
 
-
 ### 5. Run locally
 
 > [!WARNING]
 > If your **source** workspace contains Fabric items using connections authenticated with a **workspace identity**, grant the **target** workspace's identity the appropriate Azure RBAC role (for example Storage Blob Data Reader for storage accounts) on the underlying data source before running the export. This is a one-time manual step per workspace.
-
 
 ```bash
 chmod +x scripts/*.sh
@@ -186,7 +184,7 @@ Create environment-scoped CI/CD variables (Settings > CI/CD > Variables) for eac
 | `FABRIC_CLIENT_SECRET` | Service principal client secret. Mark masked and protected. |
 | `FABRIC_WORKSPACE_NAME` | Target workspace display name. |
 
-The pipeline reads these variables directly, so no `config/*.env` file is needed in CI. The `validate` stage runs `shellcheck` and a dry run; `deploy:dev` runs on `main`; `deploy:test` and `deploy:prod` run behind manual gates.
+The pipeline reads these variables directly, so no `config/*.env` file is needed in CI. Its `validate` stage runs ShellCheck and a dry run; `deploy:dev` runs on `main`; `deploy:test` and `deploy:prod` run behind manual gates.
 
 #### Troubleshooting CI/CD
 
